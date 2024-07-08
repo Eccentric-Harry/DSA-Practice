@@ -1,30 +1,39 @@
-import java.util.ArrayList;
-import java.util.List;
 
-class Solution {
-    public List<List<Integer>> generate(int numRows) {
+import java.util.*;
+
+public class PascalRow {
+    public static List<Integer> generateRow(int row) {
+        long ans = 1;
+        List<Integer> ansRow = new ArrayList<>();
+        ansRow.add(1); //inserting the 1st element
+
+        //calculate the rest of the elements:
+        for (int col = 1; col < row; col++) {
+            ans = ans * (row - col);
+            ans = ans / col;
+            ansRow.add((int)ans);
+        }
+        return ansRow;
+    }
+
+    public static List<List<Integer>> pascalTriangle(int n) {
         List<List<Integer>> ans = new ArrayList<>();
-        for (int i = 0; i < numRows; i++) {
-            ans.add(pascalRow(i));
+
+        //store the entire pascal's triangle:
+        for (int row = 1; row <= n; row++) {
+            ans.add(generateRow(row));
         }
         return ans;
     }
 
-    public List<Integer> pascalRow(int row) {
-        List<Integer> pascal = new ArrayList<>();
-        int ans = 1;
-        pascal.add(ans);
-        for (int i = 1; i <= row; i++) {
-            ans = ans * (row - i + 1) / i;
-            pascal.add(ans);
-        }
-        return pascal;
-    }
-
     public static void main(String[] args) {
-        Solution solution = new Solution();
-        int numRows = 5;
-        List<List<Integer>> result = solution.generate(numRows);
-        System.out.println(result);
+        int n = 5;
+        List<List<Integer>> ans = pascalTriangle(n);
+        for (List<Integer> it : ans) {
+            for (int ele : it) {
+                System.out.print(ele + " ");
+            }
+            System.out.println();
+        }
     }
 }
