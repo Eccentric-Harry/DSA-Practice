@@ -2,12 +2,12 @@ public class QueueArr {
     int[] arr;
     int front = -1;
     int rear = -1;
-
+    int currSize = 0;
     public QueueArr(int size) {
         arr = new int[size];
     }
     public void enqueue(int data) {
-        if (rear == arr.length - 1) { 
+        if (currSize > arr.length) { 
             System.out.println("The Queue is Full");
             return;
         }
@@ -17,6 +17,7 @@ public class QueueArr {
         }
         rear = (rear+1)%arr.length;
         arr[rear] = data;
+        currSize++;
     }
 
     public int dequeue() {
