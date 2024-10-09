@@ -1,38 +1,34 @@
-import java.util.Stack;
+import java.util.*;
 public class SumSubarrMin{
-    public int sumSubarrayMins(int[] arr) {
-        int[] nse = nse(arr);
-        int[] pse = pse(arr);
-        int sum = 0;
-        for(int i = 0; i < arr.length; i++){
-            int m = nse[i]*pse[i];
-            sum+=arr[i]*m;
-        }
-        return sum;
-        
-    }
-    public int[] nse(int[] arr){
+    public int[] nsi(int[] arr){
+        int[] nsi = new int[arr.length];
         Stack<Integer> stack = new Stack<>();
-        int[] nse = new int[arr.length];
-        for(int i = arr.length; i >-0; i--){
-            while(!stack.isEmpty() && stack.peek() >= arr[i]){
+        for(int i = arr.length-1; i >=0; i--){
+            while(!stack.isEmpty() && arr[stack.peek()] >= arr[i]){
                 stack.pop();
             }
-            nse[i] = (!stack.isEmpty())? stack.peek(): -1;
-            stack.push(arr[i]);
+            nsi[i] = (!stack.isEmpty()) ? stack.peek() : arr.length;
+            stack.push(i);
         }
-        return nes;
+        return nsi;
     }
-    public int[] pse(int[] arr){
-        int[] pse = new int[arr.length];
+    public int[] psi(int[] arr){
+        int[] psi = new int[arr.length];
         Stack<Integer> stack = new Stack<>();
+     
         for(int i = 0; i < arr.length; i++){
-            while(!stack.isEmpty() && stack.peek() >= arr[i]){
+            while(!stack.isEmpty() && arr[stack.peek()] >= arr[i]){
                 stack.pop();
             }
-            pse[i] = (!stack.isEmpty())? stack.peek(): -1;
-            stack.push(arr[i]);
+            psi[i] = (!stack.isEmpty()) ? stack.peek() : -1;
+            stack.push(i);
         }
-        return pse;
+        return psi;
     }
+    public static void main(String[] args){
+        SumSubarrMin sb = new SumSubarrMin();
+        int[] arr = {1,4,6,7,3,7,8,1};
+        int[] ans = sb.psi(arr);
+        System.out.println(Arrays.toString(ans));
+    } 
 }
