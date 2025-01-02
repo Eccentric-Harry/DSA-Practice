@@ -31,8 +31,23 @@ public class Fibonacci{
         }
         return dp[n];
     }
+    // without extra space
+    public static int optimal(int n){
+        int prev2 = 0;
+        int prev1 = 1;
+        if(n<=1){
+            return n;
+        }
+        int sol = 0; 
+        for(int i = 2; i <= n; i++){
+            sol = prev1+prev2;
+            prev2 = prev1;
+            prev1 = sol;
+        }
+        return sol;
+    }
     public static void main(String[] args){
         int n = 9;
-        System.out.println(tabulation(n));
+        System.out.println(optimal(n));
     }
 }
