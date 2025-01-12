@@ -1,11 +1,12 @@
 import java.util.*;
 public class SubsetSumII{
-    public static boolean func(int[] arr,int target, int n){
+    public static int[][] func(int[] arr,int target, int n){
         int[][] dp = new int[n][target+1];
         for(int[] arr1 : dp){
             Arrays.fill(arr1, -1);
         }
-        return helper(arr, target,n-1, dp);
+        helper(arr, target,n-1, dp);
+        return dp;
     }
     public static boolean helper(int[] arr, int target, int index, int[][] dp){
         if(target == 0){
@@ -25,5 +26,12 @@ public class SubsetSumII{
         dp[index][target] = (take || not_Take) ? 1 : 0;
         
         return dp[index][target] == 1;
+    }
+    public static void main(String[] args){
+        int[] arr = {3, 34, 4, 12, 5, 2};
+        int[][] dp =  func(arr, 9, arr.length);
+        for(int i = 0; i < dp.length; i++){
+            System.out.println(Arrays.toString(dp[i]));
+        }
     }
 }
