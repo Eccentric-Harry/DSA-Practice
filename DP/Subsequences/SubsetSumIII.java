@@ -1,4 +1,5 @@
 import java.util.*;
+
 public class SubsetSum {
     public static boolean isSubsetSum(int[] arr, int target) {
         int n = arr.length;
@@ -30,14 +31,28 @@ public class SubsetSum {
             }
         }
 
+        // Print the DP table
+        printDPTable(dp, n, target);
+
         // The result is whether we can form the target sum using all elements
         return dp[n - 1][target];
+    }
+
+    public static void printDPTable(boolean[][] dp, int n, int target) {
+        System.out.println("DP Table:");
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j <= target; j++) {
+                System.out.print(dp[i][j] ? " true " : " false ");
+            }
+            System.out.println();
+        }
     }
 
     public static void main(String[] args) {
         int[] arr = {4, 3, 2, 1};
         int target = 5;
 
-        System.out.println(isSubsetSum(arr, target)); // Output: true
+        boolean result = isSubsetSum(arr, target);
+        System.out.println("Result: " + result); // Output: true
     }
 }
