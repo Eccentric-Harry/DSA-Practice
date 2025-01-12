@@ -27,6 +27,13 @@ public class ClimbStairs{
         int steps = 5;
         int ways = countWays(steps);
         System.out.println(ways);
-        S
+        System.out.println(climb(8));
     } 
+    // recursive approach
+    public static int climb(int n){
+        if(n <= 1){
+            return 1;
+        }
+        return climb(n-1) + climb(n-2);
+    }
 }
