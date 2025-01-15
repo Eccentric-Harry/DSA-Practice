@@ -3,16 +3,30 @@
 import java.util.*;
 public class MinSumPartition{
     public int minimumDifference(int[] nums) {
-        
+        int totalSum = 0;
+        for(int num: nums){
+            totalSum+=num;
+        }
+        int mini = Integer.MAX_VALUE;
+        int[][] dp = isSubsetSum(nums,totalSum+1);
+        for(int i = 0; i < totalSum; i++){
+            if(dp[n-1][i]){
+                int s1 = i;
+                int s2 = totalSum-i;
+
+                mini = Math.min(mini, Math.abs(s1-s2));
+            }
+        }
+        return mini;
     }
-    public static int isSubsetSum(int[] nums, int target){
+    public static int[][] isSubsetSum(int[] nums, int target){
         boolean[][] dp = new boolean[nums.length][target+1];
         for(int i = 0; i < dp.length; i++){
             Arrays.fill(dp[i], false);
         }
         return helper(nums,nums.length-1,target,dp);
     }
-    public static int helper(int[] nums, int index, int target, int[][] dp){
+    public static int[][] helper(int[] nums, int index, int target, int[][] dp){
         for(int i = 0; i <dp.length; i++){
             if(target == 0){
                 dp[i][target] = true;
@@ -32,5 +46,6 @@ public class MinSumPartition{
                 dp[i][j] = take|| not_Take;
             }
         }
+        return dp;
     }
 }

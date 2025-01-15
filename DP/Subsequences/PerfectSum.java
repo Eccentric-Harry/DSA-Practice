@@ -16,7 +16,7 @@ public class PerfectSum{
         }
         int not_Take = helper(nums, index-1, target);
         int take = 0;
-        if(target >= nums[index]){
+        if(target = nums[index]){
             take = helper(nums,index-1, target-nums[index]);
         }
         return take+not_Take;
