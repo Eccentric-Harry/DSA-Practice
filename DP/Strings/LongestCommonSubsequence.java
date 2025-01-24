@@ -4,8 +4,8 @@ public class LongestCommonSubsequence{
         return helper(text1, text2,text1.length()-1, text2.length()-1);
     }
     public static int helper(String a, String b, int index1, int index2){
-        if(index1 == 0 && index){
-
+        if(index1<0 || index2<0){
+            return 0;
         }
         int m = 0;
         int nm = 0;
