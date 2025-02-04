@@ -1,52 +1,80 @@
 import java.util.*;
 
-class CountMentions {
+class Solution {
     public int[] countMentions(int numberOfUsers, List<List<String>> events) {
         int[] mentions = new int[numberOfUsers];
-        Map<Integer, Integer> offlineUntil = new HashMap<>(); 
-        
-        for (int userId = 0; userId < numberOfUsers; userId++) {
-            offlineUntil.put(userId, 0); 
+        int[] offlineEndTime = new int[numberOfUsers]; // Initially all 0, so online
+
+        List<Event> eventList = new ArrayList<>();
+        for (int i = 0; i < events.size(); i++) {
+            List<String> e = events.get(i);
+            String type = e.get(0);
+            int timestamp = Integer.parseInt(e.get(1));
+            String data = e.get(2);
+            eventList.add(new Event(type, timestamp, data, i));
         }
-        
-        for (List<String> event : events) {
-            String type = event.get(0);
-            int timestamp = Integer.parseInt(event.get(1));
-            
-            if (type.equals("OFFLINE")) {
-                int userId = Integer.parseInt(event.get(2));
-                offlineUntil.put(userId, timestamp + 60);
-            } else if (type.equals("MESSAGE")) {
-                String mentionsString = event.get(2);
-                Set<Integer> mentionedUsers = new HashSet<>();
-                
-                if (mentionsString.equals("ALL")) {
-                    for (int userId = 0; userId < numberOfUsers; userId++) {
-                        mentionedUsers.add(userId);
-                    }
-                } else if (mentionsString.equals("HERE")) {
-                    
-                    for (int userId = 0; userId < numberOfUsers; userId++) {
-                        if (timestamp >= offlineUntil.get(userId)) { 
-                            mentionedUsers.add(userId);
-                        }
-                    }
+
+        // Sort events by timestamp, then OFFLINE before MESSAGE, then original index
+        Collections.sort(eventList, (a, b) -> {
+            if (a.timestamp != b.timestamp) {
+                return Integer.compare(a.timestamp, b.timestamp);
+            } else {
+                int aType = a.type.equals("OFFLINE") ? 0 : 1;
+                int bType = b.type.equals("OFFLINE") ? 0 : 1;
+                if (aType != bType) {
+                    return Integer.compare(aType, bType);
                 } else {
-                    String[] ids = mentionsString.split(" ");
-                    for (String id : ids) {
-                        if (id.startsWith("id")) {
-                            int userId = Integer.parseInt(id.substring(2));
-                            mentionedUsers.add(userId);
+                    return Integer.compare(a.originalIndex, b.originalIndex);
+                }
+            }
+        });
+
+        for (Event event : eventList) {
+            if (event.type.equals("OFFLINE")) {
+                int userId = Integer.parseInt(event.data);
+                offlineEndTime[userId] = event.timestamp + 60;
+            } else {
+                String mentionsStr = event.data;
+                int currentTime = event.timestamp;
+                String[] tokens = mentionsStr.split(" ");
+                for (String token : tokens) {
+                    List<Integer> usersToMention = new ArrayList<>();
+                    if (token.startsWith("id")) {
+                        String idStr = token.substring(2);
+                        int userId = Integer.parseInt(idStr);
+                        usersToMention.add(userId);
+                    } else if (token.equals("ALL")) {
+                        for (int i = 0; i < numberOfUsers; i++) {
+                            usersToMention.add(i);
+                        }
+                    } else if (token.equals("HERE")) {
+                        for (int i = 0; i < numberOfUsers; i++) {
+                            if (offlineEndTime[i] <= currentTime) {
+                                usersToMention.add(i);
+                            }
                         }
                     }
-                }
-                for (int userId : mentionedUsers) {
-                    mentions[userId]++;
+                    for (int user : usersToMention) {
+                        mentions[user]++;
+                    }
                 }
             }
         }
-        
+
         return mentions;
     }
+
+    private static class Event {
+        String type;
+        int timestamp;
+        String data;
+        int originalIndex;
+
+        Event(String type, int timestamp, String data, int originalIndex) {
+            this.type = type;
+            this.timestamp = timestamp;
+            this.data = data;
+            this.originalIndex = originalIndex;
+        }
+    }
 }
-©leetcode
