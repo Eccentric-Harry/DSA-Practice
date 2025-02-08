@@ -1,4 +1,4 @@
-// program tu understand recursive approach behind pick and not pick approach for all the possible subsequences.
+// program to understand recursive approach behind pick and not pick approach for all the possible subsequences.
 import java.util.*;
 public class PickNotPick{
     private static void fun(int index, int[] arr){
