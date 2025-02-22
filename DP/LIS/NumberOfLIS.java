@@ -3,13 +3,13 @@ class Solution {
         if (nums == null || nums.length == 0) return 0;
 
         int n = nums.length;
-        int[] dp = new int[n]; // Length of LIS ending at each index
-        int[] count = new int[n]; // Number of LIS ending at each index
-        Arrays.fill(dp, 1); // Minimum LIS length is 1
-        Arrays.fill(count, 1); // Minimum LIS count is 1
+        int[] dp = new int[n]; 
+        int[] count = new int[n]; 
+        Arrays.fill(dp, 1); 
+        Arrays.fill(count, 1);
 
-        int maxLen = 1; // Maximum length of LIS
-        int totalCount = 0; // Total count of LIS
+        int maxLen = 1;
+        int totalCount = 0;
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < i; j++) {
