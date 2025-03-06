@@ -50,12 +50,14 @@ Prims algorithm or Krsukal algo for MST
 
 Minimum fuel cost to report to the capital
 <!-- Number of islands -->
-Course schedule
-Course schedule-II
+<!-- Course schedule
+Course schedule-II -->
 
 https://docs.google.com/spreadsheets/d/14oj0wOx3tEmAo-ZlWf0eThvRAxaFgH9nOUYqRCFF4vo/edit?gid=0#gid=0
 
 https://docs.google.com/spreadsheets/d/1HX3h85hcfH9M6MVp5H3GBocJ2xG9ARbSSDiZmzwmF5E/edit?gid=0#gid=0
+
+https://docs.google.com/document/d/1F6T8sl9ul9I-_sL9NmpMQBdYSZKrebhiYEmF26NA4wU/edit?tab=t.0
 
 
 1. Disjoint set union (union-find algo);
@@ -65,10 +67,10 @@ https://docs.google.com/spreadsheets/d/1HX3h85hcfH9M6MVp5H3GBocJ2xG9ARbSSDiZmzwm
 5. String matching algorithms (Rolling hash algo or Rabin-karp algo);
 
 Backtracking:
-Letter combination of phone number
-Permutations
-Combination sum
-Generate parenthesis
+<!-- Letter combination of phone number -->
+<!-- Permutations -->
+<!-- Combination sum -->
+<!-- Generate parenthesis -->
 
 Strings:
 Longest happy prefix
