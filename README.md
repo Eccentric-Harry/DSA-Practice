@@ -73,7 +73,7 @@ Backtracking:
 <!-- Generate parenthesis -->
 
 Strings:
-Longest happy prefix
+<!-- Longest happy prefix
 Longest substring without repeating characters
 Longest palindromic substring
-Shortest palindrome
+Shortest palindrome -->
