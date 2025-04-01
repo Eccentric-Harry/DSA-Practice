@@ -1,85 +1,70 @@
+import java.awt.*;
+import java.io.*;
 import java.util.*;
-import java.time.LocalDate;
 
 public class Main {
-    public static LocalDate currentDate = LocalDate.now();
-    public static void main(String[] args) {
-        // Create a sample tree:
-        //       1
-        //      / \
-        //     2   3
-        //    / \
-        //   4   5
-        
-        TreeNode root = new TreeNode(1);
-        root.left = new TreeNode(2);
-        root.right = new TreeNode(3);
-        root.left.left = new TreeNode(4);
-        root.left.right = new TreeNode(5);
-        
-        // Create an instance of the class containing levelOrder method
-        Main obj = new Main();
-        List<List<String>> result = obj.levelOrder(root);
-        
-        // Print the result
-        for (List<String> level : result) {
-            System.out.println(level);
-        }
-    }
-
-    public List<List<String>> levelOrder(TreeNode root) {
-        List<List<String>> list = new ArrayList<>();
-        if (root == null) {
-            return list;
-        }
-
-        Queue<TreeNode> q = new LinkedList<>();
-        q.offer(root);
-
-        while (!q.isEmpty()) {
-            List<String> li = new ArrayList<>();
-            int size = q.size();
-
-            for (int i = 0; i < size; i++) {
-                TreeNode curr = q.poll();
-                if (curr != null) {
-                    li.add(String.valueOf(curr.val));
-                    q.offer(curr.left);
-                    q.offer(curr.right);
-                } else {
-                    li.add("null");
+    static LinkedList<Integer>[] adj;
+    static boolean[] vis,instack;
+    static Stack<Integer> topo;
+    public static void main(String[] args) throws Exception {
+        Scanner sc=new Scanner(System.in);
+        StringBuilder sb=new StringBuilder();
+        int n=sc.nextInt();
+        String[] str=new String[n];
+        for(int i=0;i<n;i++)str[i]=sc.next();
+        adj=new LinkedList[26];
+        vis=new boolean[26];
+        instack=new boolean[26];
+        topo=new Stack<>();
+        for(int i=0;i<26;i++)adj[i]=new LinkedList<>();
+        for(int i=0;i<n;i++){
+            for(int j=i+1;j<n;j++){
+                boolean z=false;
+                int x=Math.min(str[i].length(),str[j].length());
+                for(int k=0;k<x;k++){
+                    if(str[i].charAt(k)!=str[j].charAt(k)){
+                        z=true;
+                        adj[str[i].charAt(k)-'a'].add(str[j].charAt(k)-'a');
+                        break;
+                    }
+                }
+                if(!z && str[i].length()!=x){
+                    System.out.println("Impossible");
+                    return;
                 }
             }
-
-            list.add(li);
         }
-        return list;
-    }
-    public boolean isSymmetric(TreeNode root) {
-        List<List<String>> li = luvelOrder(root);
-        for(int i = 1; i < li.length; i++){
-            if(!reverse(li.get(i))){
-                return false;
+        boolean cycle=false;
+        for(int i=0;i<26;i++){
+            if(!vis[i]){
+                cycle=dfs(i);
+                if(cycle)break;
             }
         }
-        return true;
-
-    }
-    public boolean reverse(List<String> li){
-        int n = li.length();
-        for(int i =  0; i< li.length; i++){
-            if(li.get(i) != li.get(n-i-1)){
-                return false;
+        if(cycle) System.out.println("Impossible");
+        else{
+            vis=new boolean[26];
+            while(!topo.isEmpty()){
+                sb.append((char)(topo.peek()+'a'));
+                vis[topo.pop()]=true;
             }
+            for(int i=0;i<26;i++){
+                if(!vis[i])sb.append((char)(i+'a'));
+            }
+            System.out.println(sb);
         }
-        return true;
     }
-
-}
-
-
-class TreeNode {
-    int val;
-    TreeNode left, right;
-    TreeNode(int x) { val = x; }
+    static boolean dfs(int v){
+        if(instack[v])return true;
+        if(vis[v])return false;
+        vis[v]=true;
+        instack[v]=true;
+        for(int u:adj[v]){
+            boolean cycle=dfs(u);
+            if(cycle)return true;
+        }
+        instack[v]=false;
+        topo.add(v);
+        return false;
+    }
 }
