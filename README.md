@@ -19,10 +19,10 @@ Longest valid parenthesis
 Basic Calculator
 
 Stacks:
-<!-- Evaluate postfix expression -->
-<!-- Infix to Postfix conversion -->
-<!-- Daily Temperatures -->
-<!-- Largest Rectangle in Histogram -->
+Evaluate postfix expression
+Infix to Postfix conversion 
+Daily Temperatures
+<Largest Rectangle in Histogram
 Longest valid parenthesis
 Basic Calculator
 
